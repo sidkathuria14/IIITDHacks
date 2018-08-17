@@ -170,7 +170,7 @@ public static final int PICK_IMAGE_REQUEST = 123;
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(TAG, "onResume: " + mGoogleApiClient.isConnected());
+//        Log.d(TAG, "onResume: " + mGoogleApiClient.isConnected());
         if (mGoogleApiClient == null) {
             // Create the API client and bind it to an instance variable.
             // We use this instance as the callback for connection and connection
