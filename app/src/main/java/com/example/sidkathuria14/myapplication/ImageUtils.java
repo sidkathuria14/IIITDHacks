@@ -2,7 +2,10 @@ package com.example.sidkathuria14.myapplication;
 
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.awt.image.RenderedImage;
 import java.io.File;
+import java.io.OutputStream;
+
 import javax.imageio.ImageIO;
 
 /**
@@ -42,7 +45,7 @@ public class ImageUtils {
 	 * @param pixels The integer matrix representing the data to be written
 	 * @param output File to be saved to
 	 */
-	public static void saveImage(int pixels[][], File output) {
+	public static void saveImage(int pixels[][], OutputStream output) {
 		int w = pixels.length;
 		int h = pixels[0].length;
 
@@ -53,7 +56,7 @@ public class ImageUtils {
 			}
 		}
 		try {
-			ImageIO.write(image, "png", output);
+			ImageIO.write((RenderedImage)image, "png", output);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

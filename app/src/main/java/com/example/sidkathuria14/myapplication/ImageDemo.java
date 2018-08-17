@@ -1,6 +1,8 @@
 package com.example.sidkathuria14.myapplication;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.OutputStream;
 
 /**
  * 
@@ -54,7 +56,7 @@ public class ImageDemo {
 				inputImage = new Scrambler(inputImage, kR, kC).unscramble();
 			}
 			File decFile = new File(fileDir + inputFile.getName() + DEC + FILE_EXT);
-			ImageUtils.saveImage(inputImage, decFile);
+			ImageUtils.saveImage(inputImage, new FileOutputStream(decFile));
 		} else {
 			keyFile = new File(fileDir + inputFile.getName() + KEY_EXT);
 			kR = Utils.generateRandomArray(M, PIXEL_MAX_VALUE);
@@ -65,7 +67,7 @@ public class ImageDemo {
 				inputImage = new Encrypt().encrypt(inputImage, kR, kC);
 			}
 			File encFile = new File(fileDir + inputFile.getName() + ENC + FILE_EXT);
-			ImageUtils.saveImage(inputImage, encFile);
+			ImageUtils.saveImage(inputImage, new FileOutputStream(encFile));
 		}
 		
 	}

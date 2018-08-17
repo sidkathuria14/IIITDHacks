@@ -13,5 +13,7 @@
     <string name="randomText">Secure Key</string>
     <string name="securmsg">Secure Key</string>
     <string name="desc">Generator</string>
+    <string name="desc_camera_source_activity">desc_camera_source_activity</string>
+    <string name="desc_still_image_activity">desc_still_image_activity</string>
 
 </resources>
