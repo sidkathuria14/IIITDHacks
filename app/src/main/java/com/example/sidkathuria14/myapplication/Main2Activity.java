@@ -40,7 +40,7 @@ public class Main2Activity extends AppCompatActivity {
 
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN).requestIdToken(getString(R.string.default_web_client_id)).requestEmail().build();
 
-        intent1 = new Intent(Main2Activity.this,Main2Activity.class);
+        intent1 = new Intent(Main2Activity.this,MainActivity.class);
 
         googleApiClient = new GoogleApiClient.Builder(this).enableAutoManage(this ,new GoogleApiClient.OnConnectionFailedListener(){
             @Override
@@ -84,7 +84,7 @@ public class Main2Activity extends AppCompatActivity {
             if(user!=null) {
                 Toast.makeText(Main2Activity.this, ""+3 , Toast.LENGTH_SHORT).show();
 
-                Intent intent = new Intent(Main2Activity.this, Main2Activity.class);
+                Intent intent = new Intent(Main2Activity.this, MainActivity.class);
                 startActivity(intent);
                 finish();
             }
