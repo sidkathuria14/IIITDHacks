@@ -87,7 +87,7 @@ public class Main2Activity extends AppCompatActivity {
                 Toast.makeText(Main2Activity.this, ""+3 , Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(Main2Activity.this, MainActivity.class);
-                startActivity(intent);
+//                startActivity(intent);
                 finish();
             }
         }

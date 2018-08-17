@@ -26,7 +26,7 @@ import com.google.firebase.samples.apps.mlkit.GraphicOverlay;
 import com.google.firebase.samples.apps.mlkit.GraphicOverlay.Graphic;
 
 /**
- * Graphic instance for rendering face position, orientation, and landmarks within an associated
+// * Graphic instance for rendering face position, orientation, and landmarks within an associated
  * graphic overlay view.
  */
 public class FaceGraphic extends Graphic {
