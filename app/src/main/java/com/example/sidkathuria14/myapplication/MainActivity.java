@@ -32,8 +32,9 @@ public class MainActivity extends AppCompatActivity implements GoogleApiClient.C
     public static final String TAG = "main";
     public static final int rcCC = 33;
     boolean isCC = false;
-    public static final int REQUEST_CODE_CREATOR = 123;
-String path = "";
+//    public static final int REQUEST_CODE_CREATOR = 123;
+Uri uri_path ;
+public static final int PICK_IMAGE_REQUEST = 123;
     private GoogleApiClient mGoogleApiClient;
     private Bitmap mBitmapToSave;
 
@@ -66,6 +67,8 @@ String path = "";
         }
 
 
+
+
         ((Button)findViewById(R.id.logout)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -79,13 +82,22 @@ String path = "";
         ((Button)findViewById(R.id.choose)).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
+
+                        Intent intent = new Intent();
+// Show only images, no videos or anything else
+                        intent.setType("image/*");
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+// Always show the chooser (if there are multiple options available)
+                        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+                    }
+                });
+//                Intent intent = new Intent();
+//                intent.setType("image/*");
+//                intent.setAction(Intent.ACTION_GET_CONTENT);
+//                startActivityForResult(Intent.createChooser(intent, "Select Picture"), 200);
             }
-        });
-        Log.d(TAG, "onCreate: " + path);
+//        });
+//        Log.d(TAG, "onCreate: " + path);
 
 //        Intent intent1 = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
 //        startActivityForResult(intent1, 0);
@@ -99,7 +111,7 @@ String path = "";
 //                .execute();
 
 
-    }
+
 //    public String getPathFromURI(Uri contentUri) {
 //        String res = null;
 //        String[] proj = {MediaStore.Images.Media.DATA};
@@ -111,53 +123,54 @@ String path = "";
 //        cursor.close();
 //        return res;
 //    }
-private void saveFileToDrive() {
-
-    final Bitmap image = mBitmapToSave;
-    Drive.DriveApi.newDriveContents(mGoogleApiClient)
-            .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
-
-                @Override
-                public void onResult(DriveApi.DriveContentsResult result) {
-
-                    if (!result.getStatus().isSuccess()) {
-                        Log.i("ERROR", "Failed to create new contents.");
-                        return;
-                    }
-
-
-                    OutputStream outputStream = result.getDriveContents().getOutputStream();
-                    // Write the bitmap data from it.
-                    ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
-                    image.compress(Bitmap.CompressFormat.PNG, 100, bitmapStream);
-                    try {
-                        outputStream.write(bitmapStream.toByteArray());
-                    } catch (IOException e1) {
-                        Log.i("ERROR", "Unable to write file contents.");
-                    }
-                    // Create the initial metadata - MIME type and title.
-                    // Note that the user will be able to change the title later.
-                    MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
-                            .setMimeType("image/jpeg").setTitle("Android Photo.png").build();
-                    // Create an intent for the file chooser, and start it.
-                    IntentSender intentSender = Drive.DriveApi
-                            .newCreateFileActivityBuilder()
-                            .setInitialMetadata(metadataChangeSet)
-                            .setInitialDriveContents(result.getDriveContents())
-                            .build(mGoogleApiClient);
-                    try {
-                        startIntentSenderForResult(
-                                intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
-                    } catch (IntentSender.SendIntentException e) {
-                        Log.i("ERROR", "Failed to launch file chooser.");
-                    }
-                }
-            });
-}
+//private void saveFileToDrive() {
+//
+//    final Bitmap image = mBitmapToSave;
+//    Drive.DriveApi.newDriveContents(mGoogleApiClient)
+//            .setResultCallback(new ResultCallback<DriveApi.DriveContentsResult>() {
+//
+//                @Override
+//                public void onResult(DriveApi.DriveContentsResult result) {
+//
+//                    if (!result.getStatus().isSuccess()) {
+//                        Log.i("ERROR", "Failed to create new contents.");
+//                        return;
+//                    }
+//
+//
+//                    OutputStream outputStream = result.getDriveContents().getOutputStream();
+//                    // Write the bitmap data from it.
+//                    ByteArrayOutputStream bitmapStream = new ByteArrayOutputStream();
+//                    image.compress(Bitmap.CompressFormat.PNG, 100, bitmapStream);
+//                    try {
+//                        outputStream.write(bitmapStream.toByteArray());
+//                    } catch (IOException e1) {
+//                        Log.i("ERROR", "Unable to write file contents.");
+//                    }
+//                    // Create the initial metadata - MIME type and title.
+//                    // Note that the user will be able to change the title later.
+//                    MetadataChangeSet metadataChangeSet = new MetadataChangeSet.Builder()
+//                            .setMimeType("image/jpeg").setTitle("Android Photo.png").build();
+//                    // Create an intent for the file chooser, and start it.
+//                    IntentSender intentSender = Drive.DriveApi
+//                            .newCreateFileActivityBuilder()
+//                            .setInitialMetadata(metadataChangeSet)
+//                            .setInitialDriveContents(result.getDriveContents())
+//                            .build(mGoogleApiClient);
+//                    try {
+//                        startIntentSenderForResult(
+//                                intentSender, REQUEST_CODE_CREATOR, null, 0, 0, 0);
+//                    } catch (IntentSender.SendIntentException e) {
+//                        Log.i("ERROR", "Failed to launch file chooser.");
+//                    }
+//                }
+//            });
+//}
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onStart() {
+        super.onStart();
+        Log.d(TAG, "onResume: " + mGoogleApiClient.isConnected());
         if (mGoogleApiClient == null) {
             // Create the API client and bind it to an instance variable.
             // We use this instance as the callback for connection and connection
@@ -172,6 +185,7 @@ private void saveFileToDrive() {
         }
         // Connect the client. Once connected, the camera is launched.
         mGoogleApiClient.connect();
+        Log.d(TAG, "onResume: " + mGoogleApiClient.isConnected());
     }
 
     @Override
@@ -181,31 +195,49 @@ private void saveFileToDrive() {
         }
         super.onPause();
     }
-
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
-        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
-        if (resultCode == this.RESULT_OK) {
-            if (requestCode == 200) {
-                Uri selectedImageUri = imageReturnedIntent.getData();
-                if (null != selectedImageUri) {
-                    path = getPathFromURI(selectedImageUri);
-                    Log.d(TAG, "onActivityResult: " + path);
-//                    return path;
-//                    DrawerAdapter.imageViewPP.setImageURI(selectedImageUri);
-                }
-            }else if(requestCode==0){
-                Uri selectedImageUri = imageReturnedIntent.getData();
-                if (null != selectedImageUri) {
-                    path = getPathFromURI(selectedImageUri);
-                    //DrawerAdapter.imageViewPP.setImageURI(selectedImageUri);
-                    Log.d(TAG, "onActivityResult: " + path);
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-//                    return path;
-                }
-            }
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            uri_path = data.getData();
+            Log.d(TAG, "onActivityResult: " + String.valueOf(uri_path));
+//            try {
+////                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
+//                // Log.d(TAG, String.valueOf(bitmap));
+//
+////                ImageView imageView = (ImageView) findViewById(R.id.imageView);
+////                imageView.setImageBitmap(bitmap);
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
         }
     }
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent imageReturnedIntent) {
+//        super.onActivityResult(requestCode, resultCode, imageReturnedIntent);
+//        if (resultCode == this.RESULT_OK) {
+//            if (requestCode == 200) {
+//                Uri selectedImageUri = imageReturnedIntent.getData();
+//                if (null != selectedImageUri) {
+//                    path = getPathFromURI(selectedImageUri);
+//                    Log.d(TAG, "onActivityResult: " + path);
+////                    return path;
+////                    DrawerAdapter.imageViewPP.setImageURI(selectedImageUri);
+//                }
+//            }else if(requestCode==0){
+//                Uri selectedImageUri = imageReturnedIntent.getData();
+//                if (null != selectedImageUri) {
+//                    path = getPathFromURI(selectedImageUri);
+//                    //DrawerAdapter.imageViewPP.setImageURI(selectedImageUri);
+//                    Log.d(TAG, "onActivityResult: " + path);
+//
+////                    return path;
+//                }
+//            }
+//        }
+//    }
 
     public String getPathFromURI(Uri contentUri) {
         String res = null;
@@ -232,6 +264,6 @@ private void saveFileToDrive() {
 
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
-        Log.d(TAG, "onConnectionFailed: ");
+        Log.d(TAG, "onConnectionFailed: " + connectionResult);
     }
 }
