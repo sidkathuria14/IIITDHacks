@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "867418377837",
+    "firebase_url": "https://chatmessenger-afb77.firebaseio.com",
+    "project_id": "chatmessenger-afb77",
+    "storage_bucket": "chatmessenger-afb77.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:867418377837:android:14f7dfc9bccb6d38",
+        "android_client_info": {
+          "package_name": "com.example.sidkathuria14.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "867418377837-seuemkg7c8trt6jnv0llldgqbs601s6t.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sidkathuria14.myapplication",
+            "certificate_hash": "0ccd3650f2a4de815674785088f2fed6b27407b2"
+          }
+        },
+        {
+          "client_id": "867418377837-0k6c0hpomof46tgltmm5lc070i6aj0en.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBUizvgHSvPkF0Muk9_pTHC4XLelR2OsDQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "867418377837-0k6c0hpomof46tgltmm5lc070i6aj0en.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
