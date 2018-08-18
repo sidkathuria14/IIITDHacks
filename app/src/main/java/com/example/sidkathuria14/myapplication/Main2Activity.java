@@ -31,7 +31,10 @@ public class Main2Activity extends AppCompatActivity {
     FirebaseAuth.AuthStateListener authStateListener;
     Intent intent1;
     public static final String TAG = "main";
+<<<<<<< HEAD
 
+=======
+>>>>>>> ce3c5f074acc971b61fe027bc2173549cab9857d
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

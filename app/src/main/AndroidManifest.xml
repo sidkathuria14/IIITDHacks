@@ -25,7 +25,11 @@
             </intent-filter>
         </activity>
         <activity android:name=".Main3Activity" />
+<<<<<<< HEAD
         <activity android:name=".Main4Activity"></activity>
+=======
+        <!--<activity android:name=".Main4Activity"></activity>-->
+>>>>>>> ce3c5f074acc971b61fe027bc2173549cab9857d
     </application>
 
 </manifest>
